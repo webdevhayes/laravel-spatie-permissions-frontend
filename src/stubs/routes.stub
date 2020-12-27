@@ -1,0 +1,5 @@
+Route::get('roles', 'RoleController@index')->name('roles.index');
+Route::get('roles/create', 'RoleController@create')->name('role.create');
+Route::post('roles/create', 'RoleController@store')->name('role.store');
+Route::get('roles/edit/{role}', 'RoleController@edit')->name('role.edit');
+Route::put('roles/edit/{role}', 'RoleController@update')->name('role.update');
