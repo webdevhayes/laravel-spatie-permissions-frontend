@@ -8,12 +8,12 @@
     <!-- Tailwind CSS -->
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
-    <title>Roles</title>
+    <title>Permissions</title>
 </head>
 <body>
 <div class="container mx-auto">
     <div class="flex justify-end py-10">
-        <a href="{{ route('role.create') }}">
+        <a href="{{ route('permission.create') }}">
             <button type="button" class="border bg-green-300 border-green-300 text-white py-1 px-3 rounded-md text-sm">Add</button>
         </a>
     </div>
@@ -23,24 +23,25 @@
                 <thead>
                 <tr class="border-collapse border-gray-200 border-t border-b-2">
                     <th class="p-3">Name</th>
-                    <th class="p-3">Users Count</th>
+                    <th class="p-3">Guard</th>
                     <th class="p-3">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($roles as $role)
-                <tr>
-                    <th class="p-3 first:border-t-0 border-t">{{ $role->name }}</th>
-                    <td class="p-3 first:border-t-0 border-t">{{ $role->users->count() }}</td>
-                    <td class="p-3 first:border-t-0 border-t">
-                        <a href="{{ route('role.edit', $role) }} ">
-                            <button type="button" class="border bg-yellow-300 border-yellow-300 text-white py-1 px-3 rounded-md text-sm">Edit</button>
-                        </a>
-                    </td>
-                </tr>
+                @foreach($permissions as $permission)
+                    <tr>
+                        <th class="p-3 first:border-t-0 border-t">{{ $permission->name }}</th>
+                        <td class="p-3 first:border-t-0 border-t">{{ $permission->guard_name }}</td>
+                        <td class="p-3 first:border-t-0 border-t">
+                            <a href="{{ route('permission.edit', $permission) }} ">
+                                <button type="button" class="border bg-yellow-300 border-yellow-300 text-white py-1 px-3 rounded-md text-sm">Edit</button>
+                            </a>
+                        </td>
+                    </tr>
                 @endforeach
                 </tbody>
             </table>
+            {{ $permissions->links() }}
         </div>
     </div>
 </div>

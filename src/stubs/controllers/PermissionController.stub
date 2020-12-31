@@ -1,0 +1,94 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
+class PermissionController extends Controller
+{
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return Renderable
+     */
+    public function index()
+    {
+        $permissions = Permission::paginate(10);
+
+        return view('permissions.index', compact('permissions'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        return view('permissions.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $this->validatePermissionsForm($request);
+
+        $permission = Permission::create([
+            'name' => $request->permission_name,
+            'guard_name' => 'web'
+        ]);
+
+        return redirect()->route('permissions.index');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Permission $permission
+     * @return Response
+     */
+    public function edit(Permission $permission)
+    {
+        return view('permissions.edit', compact('permission'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param Permission $permission
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function update(Request $request, Permission $permission)
+    {
+        $this->validatePermissionsForm($request, $permission);
+
+        $permission->update([
+            'name' => $request->permission_name,
+            'guard_name' => 'web'
+        ]);
+
+        return redirect()->route('permissions.index');
+    }
+
+    private function validatePermissionsForm(Request $request, Permission $permission = null)
+    {
+        $uniquePermission = $permission === null ? '' : ',' . $permission->id;
+        return $request->validate([
+            'permission_name' => 'required|string|max:255|unique:permissions,name' . $uniquePermission,
+        ]);
+    }
+}

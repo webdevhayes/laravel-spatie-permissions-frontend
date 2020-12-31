@@ -19,6 +19,9 @@ class LaravelSpatiePermissionsFrontendCommand extends Command
         'roles/create.stub' => 'roles/create.blade.php',
         'roles/edit.stub' => 'roles/edit.blade.php',
         'roles/index.stub' => 'roles/index.blade.php',
+        'permissions/create.stub' => 'permissions/create.blade.php',
+        'permissions/edit.stub' => 'permissions/edit.blade.php',
+        'permissions/index.stub' => 'permissions/index.blade.php',
     ];
 
     /**
@@ -54,6 +57,9 @@ class LaravelSpatiePermissionsFrontendCommand extends Command
         if (! is_dir($directory = $this->getViewPath('roles'))) {
             mkdir($directory, 0755, true);
         }
+        if (! is_dir($directory = $this->getViewPath('permissions'))) {
+            mkdir($directory, 0755, true);
+        }
     }
 
     /**
@@ -86,14 +92,23 @@ class LaravelSpatiePermissionsFrontendCommand extends Command
     {
         $this->callSilent('laravel-spatie-permissions-frontend:controllers');
 
-        $controller = app_path('Http/Controllers/RoleController.php');
+        $roleController = app_path('Http/Controllers/RoleController.php');
+        $permissionController = app_path('Http/Controllers/PermissionController.php');
 
-        if (file_exists($controller)) {
+        if (file_exists($roleController)) {
             if ($this->confirm("The [RoleController.php] file already exists. Do you want to replace it?")) {
-                file_put_contents($controller, $this->compileControllerStub());
+                file_put_contents($roleController, $this->compileRoleControllerStub());
             }
         } else {
-            file_put_contents($controller, $this->compileControllerStub());
+            file_put_contents($roleController, $this->compileRoleControllerStub());
+        }
+
+        if (file_exists($permissionController)) {
+            if ($this->confirm("The [PermissionController.php] file already exists. Do you want to replace it?")) {
+                file_put_contents($permissionController, $this->compilePermissionControllerStub());
+            }
+        } else {
+            file_put_contents($permissionController, $this->compilePermissionControllerStub());
         }
 
         file_put_contents(
@@ -105,16 +120,30 @@ class LaravelSpatiePermissionsFrontendCommand extends Command
 
 
     /**
-     * Compiles the "HomeController" stub.
+     * Compiles the "RoleController" stub.
      *
      * @return string
      */
-    protected function compileControllerStub()
+    protected function compileRoleControllerStub()
     {
         return str_replace(
             '{{namespace}}',
             $this->laravel->getNamespace(),
             file_get_contents(__DIR__.'/stubs/controllers/RoleController.stub')
+        );
+    }
+
+    /**
+     * Compiles the "PermissionController" stub.
+     *
+     * @return string
+     */
+    protected function compilePermissionControllerStub()
+    {
+        return str_replace(
+            '{{namespace}}',
+            $this->laravel->getNamespace(),
+            file_get_contents(__DIR__.'/stubs/controllers/PermissionController.stub')
         );
     }
 

@@ -8,39 +8,30 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Roles</title>
+    <title>Edit Permission</title>
 </head>
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-12 mt-3">
-            <div class="text-right">
-                <a href="{{ route('role.create') }}" class="btn btn-success btn-sm">Add</a>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-12 my-5">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Users Count</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($roles as $role)
-                <tr>
-                    <th scope="row">{{ $role->name }}</th>
-                    <td>{{ $role->users->count() }}</td>
-                    <td>
-                        <a href="{{ route('role.edit', $role) }} " class="btn btn-warning text-white btn-sm">Edit</a>
-                    </td>
-                </tr>
-                @endforeach
-                </tbody>
-            </table>
+            <form method="POST" action="{{ route('permission.update', $permission) }}">
+                @csrf
+                @method('PUT')
+                <div class="form-group">
+                    <label for="permission_name">Permission name</label>
+                    <input type="text" class="form-control @error('permission_name') is-invalid @enderror" name="permission_name" id="permission_name" aria-describedby="permission_name" placeholder="Enter permission name" value="{{ !empty(old('permission_name')) ? old('permission_name') : $permission->name }}">
+                    @error('permission_name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('permission_name') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="row">
+                    <div class="col-12 my-3">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

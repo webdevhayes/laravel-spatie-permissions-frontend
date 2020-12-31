@@ -3,3 +3,9 @@ Route::get('roles/create', 'RoleController@create')->name('role.create');
 Route::post('roles/create', 'RoleController@store')->name('role.store');
 Route::get('roles/edit/{role}', 'RoleController@edit')->name('role.edit');
 Route::put('roles/edit/{role}', 'RoleController@update')->name('role.update');
+
+Route::get('permissions', 'PermissionController@index')->name('permissions.index');
+Route::get('permissions/create', 'PermissionController@create')->name('permission.create');
+Route::post('permissions/create', 'PermissionController@store')->name('permission.store');
+Route::get('permissions/edit/{permission}', 'PermissionController@edit')->name('permission.edit');
+Route::put('permissions/edit/{permission}', 'PermissionController@update')->name('permission.update');

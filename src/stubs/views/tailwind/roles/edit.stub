@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Tailwind CSS -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+    <title>Edit Role</title>
+</head>
+<body>
+<div class="container mx-auto">
+    <div class="flex py-3">
+        <div class="flex-1">
+            <div method="POST" action="{{ route('role.update', $role) }}">
+                @csrf
+                @method('PUT')
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="first_name" class="block text-sm font-medium text-gray-700">Role name</label>
+                    <input type="text" name="role_name" id="role_name" aria-describedby="role_name" value="{{ !empty(old('role_name')) ? old('role_name') : $role->name }}" placeholder="Enter role name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border p-2 rounded-md @error('role_name') border-red-600 @enderror">
+                    @error('role_name')
+                    <div class="text-red-600 text-sm" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                    @enderror
+                </div>
+                <div class="flex flex-row">
+                    @foreach($permissions as $permission)
+                    <div class="mr-2 my-3">
+                        <input type="checkbox" id="{{ $permission->name.$permission->id }}" name="permissions[{{$permission->id}}]" value="1"
+                            @if ( old( 'permissions' ) && array_key_exists($permission->id, old( 'permissions' )) )
+                                checked
+                            @elseif ( !old('permissions') && $role->permissions->contains($permission->id) )
+                                checked
+                            @endif
+                        >
+                        <label for="{{ $permission->name.$permission->id }}">{{ $permission->name }}</label>
+                    </div>
+                    @endforeach
+                </div>
+                <button type="submit" class="border bg-blue-600 border-blue-600 text-white py-1 px-3 rounded-md text-sm">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

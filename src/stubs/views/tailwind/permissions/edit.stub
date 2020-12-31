@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Tailwind CSS -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+    <title>Edit Permission</title>
+</head>
+<body>
+<div class="container mx-auto">
+    <div class="flex py-5">
+        <div class="flex-1">
+            <form method="POST" action="{{ route('permission.update', $permission) }}">
+                @csrf
+                @method('PUT')
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="permission_name" class="block text-sm font-medium text-gray-700">Permission name</label>
+                    <input type="text" name="permission_name" id="permission_name" aria-describedby="permission_name" value="{{ !empty(old('permission_name')) ? old('permission_name') : $permission->name }}" placeholder="Enter permission name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border p-2 rounded-md @error('permission_name') border-red-600 @enderror">
+                    @error('permission_name')
+                    <div class="text-red-600 text-sm" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                    @enderror
+                </div>
+                <button type="submit" class="border bg-blue-600 border-blue-600 text-white py-1 mt-3 px-3 rounded-md text-sm">Submit</button>
+                </form>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

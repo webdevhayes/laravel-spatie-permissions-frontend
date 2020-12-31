@@ -8,14 +8,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Roles</title>
+    <title>Permissions</title>
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-12 mt-3">
             <div class="text-right">
-                <a href="{{ route('role.create') }}" class="btn btn-success btn-sm">Add</a>
+                <a href="{{ route('permission.create') }}" class="btn btn-success btn-sm">Add</a>
             </div>
         </div>
     </div>
@@ -25,22 +25,23 @@
                 <thead>
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Users Count</th>
+                    <th scope="col">Guard</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($roles as $role)
-                <tr>
-                    <th scope="row">{{ $role->name }}</th>
-                    <td>{{ $role->users->count() }}</td>
-                    <td>
-                        <a href="{{ route('role.edit', $role) }} " class="btn btn-warning text-white btn-sm">Edit</a>
-                    </td>
-                </tr>
+                @foreach($permissions as $permission)
+                    <tr>
+                        <th scope="row">{{ $permission->name }}</th>
+                        <th scope="row">{{ $permission->guard_name }}</th>
+                        <td>
+                            <a href="{{ route('permission.edit', $permission) }} " class="btn btn-warning text-white btn-sm">Edit</a>
+                        </td>
+                    </tr>
                 @endforeach
                 </tbody>
             </table>
+            {{ $permissions->links() }}
         </div>
     </div>
 </div>

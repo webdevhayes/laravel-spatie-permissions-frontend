@@ -1,6 +1,8 @@
 # Frontend Boilerplate for spatie permissions package
 
-Frontend bolierplate for spaties permissions package. This package gives you a start on managing roles and permissions.
+Frontend boilerplate for [spaties permissions package](https://github.com/spatie/laravel-permission). This package gives you a start on managing roles and permissions. This is a basic package and does not employ any design patterns nor does the package do any opinionated structure. 
+
+You are free edit the code as you wish once the package has been published. 
 
 ## Installation
 
@@ -26,6 +28,9 @@ php artisan laravel-spatie-permissions-frontend tailwind
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Todo
+- Add tests
 
 ## Credits
 
